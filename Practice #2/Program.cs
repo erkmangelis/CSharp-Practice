@@ -136,7 +136,7 @@ do
             while (dogCharacteristic == "")
             {
                 // have the user enter physical characteristics to search for
-                Console.WriteLine($"\nEnter one desired dog characteristics to search for");
+                Console.WriteLine($"\nEnter the dog characteristics to search for separated by commas");
                 readResult = Console.ReadLine();
                 if (readResult != null)
                 {
@@ -146,22 +146,33 @@ do
 
             bool noMatchesDog = true;
             string dogDescription = "";
+            string[] dogCharacteristicList = dogCharacteristic.Split(",");
 
             // #6 loop through the ourAnimals array to search for matching animals
             for (int i = 0; i < maxPets; i++)
             {
                 if (ourAnimals[i, 1].Contains("dog"))
                 {
-                        // #7 Search combined descriptions and report results
-                        dogDescription = ourAnimals[i, 4] + "\n" + ourAnimals[i, 5];
+                    // #7 Search combined descriptions and report results
+                    dogDescription = ourAnimals[i, 4] + "\n" + ourAnimals[i, 5];
 
-                        if (dogDescription.Contains(dogCharacteristic))
+                    Console.WriteLine();
+
+                    for (int j = 0; j < dogCharacteristicList.Count(); j++)
+                    {
+                        if (dogDescription.Contains(dogCharacteristicList[j].Trim()))
                         {
-                            Console.WriteLine($"\nOur dog {ourAnimals[i, 3]} is a match!");
-                            Console.WriteLine(dogDescription);
-
+                            Console.WriteLine($"Our dog {ourAnimals[i, 3].Substring(10)} is a {dogCharacteristicList[j].Trim()} match!");
+                            
                             noMatchesDog = false;
                         }
+                    }
+
+                    if (!noMatchesDog)
+                    {
+                        Console.WriteLine($"\n{ourAnimals[i, 3]} ({ourAnimals[i, 0]})");
+                        Console.WriteLine(dogDescription);
+                    }
                 }
             }
 
